@@ -1,5 +1,6 @@
 # Projeto Integrador - Apoio Decisório aos Negócios
 Projeto Integrador - Apoio Decisório aos Negócios
+base de dados :https://www.kaggle.com/datasets/missionjee/car-sales-report
 
 Vendas e Desempenho Comercial
 Perguntas de negócio:
