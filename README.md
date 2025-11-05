@@ -40,21 +40,39 @@ KPIs sugeridos:
 ●	Índice de esforço financeiro (preço do carro ÷ renda anual).
 
 5.3. Análise Regional
+
 Perguntas de negócio:
+
 ●	Quais regiões apresentam maior volume de vendas?
+
 ●	Há diferenças significativas no preço médio entre regiões?
+
 ●	Quais concessionárias têm melhor desempenho de receita?
+
 KPIs sugeridos:
+
 ●	Receita total por região.
+
 ●	Ticket médio por concessionária.
+
 ●	Ranking de concessionárias por volume de vendas.
+
 5.4. Suporte a Estratégias de Marketing e Expansão
+
 Perguntas de negócio:
+
 ●	Em quais regiões vale a pena expandir a rede de concessionárias?
+
 ●	Quais perfis de cliente devem ser priorizados em campanhas de marketing?
+
 ●	Existe correlação entre perfil socioeconômico e características do veículo adquirido?
+
 KPIs sugeridos:
+
 ●	Taxa de penetração de mercado (vendas ÷ potencial de clientes).
+
 ●	Segmentação de clientes por perfil (clusterização).
+
 ●	ROI estimado de campanhas regionais.
+
 
