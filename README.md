@@ -9,17 +9,7 @@
 ### Perguntas de negócio
 
 * **Quais são os modelos e marcas mais vendidos no período analisado?**
-
-  ```python
-  df_maisvendidos = Agrupar por Data e Empresa(marcas), modelo
-  ```
-
 * **Qual é o ticket médio das vendas por região ou concessionária?**
-
-  ```python
-  df_ticket_medio = Agrupar por região de revendedor o preço $
-  ```
-
 * **Existe sazonalidade nas vendas ao longo do tempo?**
 
 ---
@@ -29,17 +19,20 @@
 * **Volume de vendas (número de carros vendidos)**
 
   ```python
-  df_total = contagem dos ID do carro
+  df_total = contagem dos [Car_id]
   ```
 
 * **Receita total e ticket médio de venda**
 
   ```python
-  df_receita_total = Soma da coluna Preço $
-  df_media_receita_ano = Média da coluna Preço $
+  df_receita_total = Soma da coluna[Price ($)]
+  df_media_receita_ano = Média da coluna[Price ($)]
   ```
 
 * **Taxa de crescimento das vendas por mês/trimestre**
+    ```python
+    df_tx_crescimento = {[vendas mês atual [Price ($)] - vendas mês anterior [Price ($)]]/vendas mês anterior[Price ($)]}*100
+    ```
 
 ---
 
@@ -48,30 +41,30 @@
 ### Perguntas de negócio
 
 * **Clientes de maior renda compram quais tipos de veículos?**
-
-  ```python
-  df_renda_x_modelo = Fazer faixa de renda do comprador (Renda anual), agrupar por modelo
-  ```
-
 * **Existe diferença de preferência entre homens e mulheres?**
-
-  ```python
-  df_genero = Porcentagem que tem de homens e mulheres na coluna genero (Gênero / df_total)
-  ```
-
 * **Qual é a faixa de renda predominante dos compradores em cada região?**
-
-  ```python
-  df_agrupar_faixa_renda = ...
-  ```
 
 ---
 
 ### KPIs sugeridos
 
 * Distribuição de clientes por faixa de renda
+
+  ```python
+  df_agrupar_faixa_renda = Agrupar por [faixa de renda] contagem de linha [Car_id] e fazer a procentagem encima do total
+  ```
+
 * Percentual de vendas por gênero
+
+  ```python
+  df_genero = Porcentagem que tem de homens e mulheres na coluna genero (Gender / df_total)
+  ```
+
 * Índice de esforço financeiro (preço do carro ÷ renda anual)
+
+  ```python
+  df_renda_x_modelo = Criar uma nova coluna [faixa de renda] do comprador [Annual Income], agrupar por [Model]
+  ```
 
 ---
 
