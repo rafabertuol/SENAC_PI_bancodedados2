@@ -20,3 +20,8 @@ st.markdown(
     disponibilizado na plataforma Kaggle.
     """
 )
+
+st.image("imagens/car-factory.png", 
+         caption="Automação industrial na fabricação de veículos", 
+         use_column_width=True
+         )

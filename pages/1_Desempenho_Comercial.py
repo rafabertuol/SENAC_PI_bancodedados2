@@ -8,7 +8,17 @@ import plotly.express as px
 with open('dataframes/dataframes.pkl', 'rb') as f:
     dfs = pickle.load(f)
 
-st.subheader("🚗 1.1 Vendas e Desempenho Comercial")
+st.title("🚗 1.1 Vendas e Desempenho Comercial")
+
+st.markdown(
+    """
+    #### Perguntas de negócio
+
+    * **Quais são os modelos e marcas mais vendidos no período analisado?**
+    * **Qual é o ticket médio das vendas por região ou concessionária?**
+    * **Existe sazonalidade nas vendas ao longo do tempo?**
+    """
+)
 
 # Usar os DataFrames
 col1, col2, col3 = st.columns(3)
