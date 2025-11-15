@@ -11,16 +11,6 @@ with open('dataframes/dataframes.pkl', 'rb') as f:
 
 st.title("🗺️ 1.3 Análise Regional")
 
-st.markdown(
-    """
-    #### Perguntas de negócio
-
-    * Quais regiões apresentam maior volume de vendas?
-    * Há diferenças significativas no preço médio entre regiões?
-    * Quais concessionárias têm melhor desempenho de receita?
-    """
-)
-
 # ================================
 # GRÁFICO 1 — Barra horizontal receita por região
 # ================================

@@ -11,17 +11,7 @@ with open('dataframes/dataframes.pkl', 'rb') as f:
 
 st.title("👤 1.2 Perfil Cliente")
 
-st.markdown(
-    """
-    #### Perguntas de negócio
-
-    * **Clientes de maior renda compram quais tipos de veículos?**
-    * **Existe diferença de preferência entre homens e mulheres?**
-    * **Qual é a faixa de renda predominante dos compradores em cada região?**
-    """
-)
-
-st.subheader("Distribuição de clientes por faixa de renda")
+st.markdown("#### Distribuição de clientes por faixa de renda")
 
 # Gráfico de barras
 chart = (
@@ -48,13 +38,6 @@ chart = alt.Chart(dfs["df_genero"]).mark_arc().encode(
 )
 
 st.altair_chart(chart, use_container_width=True)
-
-
-st.subheader("Relação renda × modelo de veículo")
-
-
-
-
 
 st.subheader("Preferências por renda e gênero")
 

@@ -11,16 +11,6 @@ with open('dataframes/dataframes.pkl', 'rb') as f:
 
 st.title("🚗 1.1 Vendas e Desempenho Comercial")
 
-st.markdown(
-    """
-    #### Perguntas de negócio
-
-    * **Quais são os modelos e marcas mais vendidos no período analisado?**
-    * **Qual é o ticket médio das vendas por região ou concessionária?**
-    * **Existe sazonalidade nas vendas ao longo do tempo?**
-    """
-)
-
 # Usar os DataFrames
 col1, col2, col3 = st.columns(3)
 
@@ -84,13 +74,13 @@ df_share_receita = df_share_receita.sort_values(by='Share Receita (%)', ascendin
 st.dataframe(df_share_receita)
 
 # Criar gráfico de barras horizontais
+st.markdown("#### 📊 Participação de Receita por Marca")
 fig = px.bar(
     df_share_receita,
     x='Share Receita (%)',
     y='Marca',
     orientation='h',
-    text=df_share_receita['Share Receita (%)'].apply(lambda x: f"{x:.1f}%"),
-    title="📊 Participação de Receita por Marca",
+    text=df_share_receita['Share Receita (%)'].apply(lambda x: f"{x:.1f}%")
 )
 
 # Ajustar layout
@@ -105,5 +95,54 @@ fig.update_layout(
 
 st.plotly_chart(fig, use_container_width=True)
 
-st.subheader("📊 Taxa de Crescimento")
+#####################
+#   Gráfico de Linhas - Taxa de Crescimento
+#####################
+
+st.markdown("#### 📊 Taxa de Crescimento")
 st.line_chart(dfs['df_vendas_mes'].set_index('Mês')['Receita'])
+
+#####################
+#   Gráfico de Pizza - Participação por Marca
+#####################
+
+# Paleta personalizada (10 cores)
+cores = [
+    "#3A7DFF",  # azul forte
+    "#FF6FB1",  # rosa
+    "#00A676",  # verde
+    "#F4A259",  # laranja suave
+    "#8D5B4C",  # marrom elegante
+    "#6A4C93",  # roxo
+    "#D4A017",  # dourado
+    "#FF4F4F",  # vermelho claro
+    "#0096C7",  # azul petróleo
+    "#8ECae6"   # azul claro
+]
+st.markdown("#### Participação por Marca — Quantidade Vendida")
+fig = px.pie(
+    dfs["df_top_marcas"],
+    names="Marca",
+    values="Quantidade",
+    hole=0.45,
+    color="Marca",
+    color_discrete_sequence=cores
+)
+
+fig.update_traces(
+    textinfo="percent",
+    pull=[0.03] * len(dfs["df_top_marcas"]),  # efeito de leve destaque
+    hovertemplate="<b>%{label}</b><br>" +
+                  "Quantidade: %{value}<br>" +
+                  "Receita Total: R$ %{customdata}<extra></extra>",
+    customdata=dfs["df_receita_total"]
+)
+
+fig.update_layout(
+    showlegend=True,
+    legend_title="Marca",
+    template="plotly_white",
+    margin=dict(t=60, b=20, l=20, r=20),
+)
+
+st.plotly_chart(fig, use_container_width=True)
