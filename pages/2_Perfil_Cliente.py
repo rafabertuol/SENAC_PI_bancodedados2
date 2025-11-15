@@ -1,9 +1,17 @@
+"""
+============================================================================
+PROJETO INTEGRADOR - APOIO DECISÓRIO AOS NEGÓCIOS
+Script da Seção 1.1 - Perfil Cliente
+Autor: Aline Morais
+Data: 14/11/2025
+Descrição: Script Python para utilizar o streamlit
+============================================================================
+"""
+
 import pickle
 import streamlit as st
-import pandas as pd
 import altair as alt
 import plotly.express as px
-from numpy.random import default_rng as rng
 
 # Carregar os DataFrames
 with open('dataframes/dataframes.pkl', 'rb') as f:
@@ -11,7 +19,11 @@ with open('dataframes/dataframes.pkl', 'rb') as f:
 
 st.title("👤 1.2 Perfil Cliente")
 
-st.markdown("#### Distribuição de clientes por faixa de renda")
+# ================================
+# GRÁFICO 1 — Distribuição por faixa de renda
+# ================================
+
+st.subheader("📈 Distribuição de clientes por faixa de renda")
 
 # Gráfico de barras
 chart = (
@@ -28,21 +40,34 @@ chart = (
 )
 st.altair_chart(chart, use_container_width=True)
 
-st.subheader("Percentual de vendas por gênero")
+# ================================
+# GRÁFICO 2 — Percentual de vendas por gênero
+# ================================
 
-# Gráfico de Pizza
-chart = alt.Chart(dfs["df_genero"]).mark_arc().encode(
-    theta=alt.Theta(field="Percentual (%)", type="quantitative"),
-    color=alt.Color(field="Gênero", type="nominal"),
-    tooltip=["Gênero", "Percentual (%)"]
+st.subheader(" 📈 Percentual de vendas por gênero")
+
+df = dfs["df_genero"]
+
+fig = px.pie(
+    df,
+    names="Gênero",
+    values="Percentual (%)",
+    hole=0.5,  # transforma em rosca
 )
 
-st.altair_chart(chart, use_container_width=True)
+# Ajustar rótulos e estilo
+fig.update_traces(
+    textinfo="label+percent"  # nome + porcentagem
+)
 
-st.subheader("Preferências por renda e gênero")
+st.plotly_chart(fig, use_container_width=True)
+
+###################################################
+
+st.subheader("📈 Preferências por renda e gênero")
 
 # ================================
-# GRÁFICO 1 — Scatter com gênero
+# GRÁFICO 3 — Scatter com gênero
 # ================================
 jitter1 = alt.Chart(dfs["df_preferencias"]).transform_calculate(
     jitter="(random() - 0.5) * 0.3"
@@ -72,7 +97,7 @@ chart_scatter_genero = (
 )
 
 # ===========================================
-# GRÁFICO 2 — Scatter com faixa de renda
+# GRÁFICO 4 — Scatter com faixa de renda
 # ===========================================
 jitter2 = alt.Chart(dfs["df_preferencias"]).transform_calculate(
     jitter="(random() - 0.5) * 0.3"

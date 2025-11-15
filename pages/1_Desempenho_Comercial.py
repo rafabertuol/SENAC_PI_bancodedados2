@@ -23,9 +23,9 @@ st.title("🚗 1.1 Vendas e Desempenho Comercial")
 
 # Usar as métricas principais em colunas como card
 col1, col2, col3 = st.columns(3)
-#####################
+# ================================
 # Metrics principais
-#####################
+# ================================
 
 # Total de Vendas (valor direto)
 
@@ -81,9 +81,9 @@ df['Preço Médio'] = df['Preço Médio'].apply(formatar_moeda)
 
 st.dataframe(df.head(10))
 
-########################
+# ================================
 # Tabela - Share por quantidade vendida
-########################
+# ================================
 
 st.subheader(" 📈 Share por quantidade vendida")
 
@@ -114,9 +114,9 @@ df_share_marca = df_share_marca[['Marca', 'Quantidade', 'Share (%)']]
 # Exibe no Streamlit
 st.dataframe(df_share_marca)
 
-######################
+# ================================
 # Tabela - Share por receita total
-#####################
+# ================================
 
 st.subheader("📈 Share por receita total")
 
@@ -153,9 +153,9 @@ df_share_receita = df_share_receita[['Marca', 'Receita Total', 'Share Receita (%
 # Exibir
 st.dataframe(df_share_receita)
 
-#####################
+# ================================
 #  Gráfico de Barras - Receita por Marca
-#####################
+# ================================
 
 st.subheader("📊 Receita Total por Marca")
 
@@ -191,9 +191,9 @@ fig.update_layout(
 
 st.plotly_chart(fig, use_container_width=True)
 
-#####################
+# ================================
 #   Gráfico de Linhas - Taxa de Crescimento
-#####################
+# ================================
 
 st.markdown("#### 📊 Taxa de Crescimento")
 
@@ -214,9 +214,9 @@ fig.update_layout(
 
 st.plotly_chart(fig, use_container_width=True)
 
-#####################
+# ================================
 #   Gráfico de Pizza - Participação por Marca
-#####################
+# ================================
 
 # Paleta personalizada (10 cores)
 cores = [
