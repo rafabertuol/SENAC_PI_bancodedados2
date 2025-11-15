@@ -1,9 +1,17 @@
+"""
+============================================================================
+PROJETO INTEGRADOR - APOIO DECISÓRIO AOS NEGÓCIOS
+Script da Seção 1.1 - Perfil Cliente
+Autor: Aline Morais
+Data: 14/11/2025
+Descrição: Script Python para utilizar o streamlit
+============================================================================
+"""
+
 import pickle
 import streamlit as st
-import pandas as pd
 import plotly.express as px
 import altair as alt
-
 
 # Carregar os DataFrames
 with open('dataframes/dataframes.pkl', 'rb') as f:
@@ -14,7 +22,7 @@ st.title("🗺️ 1.3 Análise Regional")
 # ================================
 # GRÁFICO 1 — Barra horizontal receita por região
 # ================================
-st.markdown("### Receita por região")
+st.subheader("📊 Receita por região")
 
 chart_regiao = (
     alt.Chart(dfs["df_receita_regiao"])
@@ -32,7 +40,7 @@ st.altair_chart(chart_regiao, use_container_width=True)
 # ================================
 # GRÁFICO 2 — Barra horizontal ticket médio por região e tabela de top 5
 # ================================
-st.markdown("### Ticket Médio por Concessionária")
+st.subheader("📈 Ticket Médio por Concessionária")
 df_receita_regiao = dfs["df_receita_regiao"]  # <-- nome certo
 
 df_receita_regiao["Ticket Médio"] = (
@@ -69,11 +77,10 @@ with col2:
         .head(5)
     )
 
-
 # ================================
-# GRÁFICO 3 — 
+# GRÁFICO 3 - Ranking de concessionárias
 # ================================
-st.markdown("### Ranking de concessionárias")
+st.subheader("📈  Ranking de concessionárias")
 heatmap_ranking = (
     alt.Chart(dfs["df_ranking"])
     .mark_rect()
@@ -118,10 +125,10 @@ st.altair_chart(heatmap_ranking, use_container_width=True)
 
 st.subheader("📊 Comparação entre Regiões")
 
-# ─────────────────────────────────────────────
-# 1) GRÁFICO DE BARRAS — Receita por Concessionária
-# ─────────────────────────────────────────────
-st.markdown("##### Receita por Concessionária (Top Regiões)")
+# ================================
+#GRÁFICO 4 — Receita por Concessionária
+# ================================
+st.markdown("#### Receita por Concessionária (Top Regiões)")
 fig_bar = px.bar(
     dfs["df_comparacao_regioes"].sort_values("Receita por Concessionária", ascending=False),
     x="Receita por Concessionária",
@@ -133,10 +140,10 @@ fig_bar = px.bar(
 st.plotly_chart(fig_bar, use_container_width=True)
 
 
-# ─────────────────────────────────────────────
-# 2) GRÁFICO DE BARRAS AGRUPADAS — Ticket Médio vs Receita por Concessionária
-# ─────────────────────────────────────────────
-st.markdown("##### Comparação Direta de Indicadores")
+# ================================
+# GRÁFICO 5 — Ticket Médio vs Receita por Concessionária
+# ================================
+st.subheader("📊 Comparação Direta de Indicadores")
 df_melt = dfs["df_comparacao_regioes"].melt(
     id_vars="Região",
     value_vars=["Ticket Médio", "Receita por Concessionária"],
