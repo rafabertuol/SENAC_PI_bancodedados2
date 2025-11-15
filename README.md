@@ -115,3 +115,10 @@
 * Taxa de penetração de mercado (vendas ÷ potencial de clientes)
 * Segmentação de clientes por perfil (*clusterização*)
 * ROI estimado de campanhas regionais
+
+
+https://d3js.org/
+
+https://observablehq.com/@d3/gallery?utm_source=d3js-org&utm_medium=hero&utm_campaign=try-observable
+
+https://seaborn.pydata.org/examples/index.html

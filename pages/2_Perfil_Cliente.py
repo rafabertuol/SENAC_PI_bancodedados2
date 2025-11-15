@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import plotly.express as px
-
+from numpy.random import default_rng as rng
 
 # Carregar os DataFrames
 with open('dataframes/dataframes.pkl', 'rb') as f:
@@ -50,35 +50,23 @@ chart = alt.Chart(dfs["df_genero"]).mark_arc().encode(
 st.altair_chart(chart, use_container_width=True)
 
 
-st.subheader("Relação renda × modelo")
-chart = (
-    alt.Chart(dfs["df_renda_x_modelo"])
-    .mark_bar()
-    .encode(
-        y=alt.Y("Modelo:N", title="Modelo"),
-        x=alt.X("sum(Quantidade):Q", title="Quantidade Total"),
-        color=alt.Color("Faixa de Renda:N", title="Faixa de Renda"),
-        tooltip=[
-            "Faixa de Renda",
-            "Modelo",
-            "Quantidade",
-            "Preço Médio",
-            "Esforço Financeiro"
-        ]
-    )
-)
+st.subheader("Relação renda × modelo de veículo")
 
-st.altair_chart(chart, use_container_width=True)
+
+
+
 
 st.subheader("Preferências por renda e gênero")
 
-# preferencia por genero
-jitter = alt.Chart(dfs["df_preferencias"]).transform_calculate(
+# ================================
+# GRÁFICO 1 — Scatter com gênero
+# ================================
+jitter1 = alt.Chart(dfs["df_preferencias"]).transform_calculate(
     jitter="(random() - 0.5) * 0.3"
 )
 
-chart_scatter = (
-    jitter.mark_circle(size=120, opacity=0.7)
+chart_scatter_genero = (
+    jitter1.mark_circle(size=120, opacity=0.7)
     .encode(
         x=alt.X("Quantidade:Q", title="Quantidade"),
         y=alt.Y("Marca:N", title="Marca"),
@@ -86,62 +74,60 @@ chart_scatter = (
             "Gênero:N",
             scale=alt.Scale(
                 domain=["Male", "Female"],
-                range=["#3A7DFF", "#FF6FB1"]   # azul / rosa
+                range=["#3A7DFF", "#FF6FB1"],  # azul / rosa
             ),
-            title="Gênero"
+            title="Gênero",
         ),
         tooltip=[
             "Gênero",
             "Marca",
             "Faixa de Renda",
             "Quantidade",
-            "Preço Médio"
-        ]
+            "Preço Médio",
+        ],
     )
 )
 
-st.altair_chart(chart_scatter, use_container_width=True)
-
-# preferencia por renda 
-# Jitter para espalhar os pontos
-jitter = alt.Chart(dfs["df_preferencias"]).transform_calculate(
+# ===========================================
+# GRÁFICO 2 — Scatter com faixa de renda
+# ===========================================
+jitter2 = alt.Chart(dfs["df_preferencias"]).transform_calculate(
     jitter="(random() - 0.5) * 0.3"
 )
 
-# Definição da paleta de 4 cores
 color_scale = alt.Scale(
     domain=[
-        "Alta (> 1M)", 
+        "Alta (> 1M)",
         "Média-Alta (500k-1M)",
         "Média (100k-500k)",
-        "Baixa (< 50k)"
+        "Baixa (< 50k)",
     ],
-    range=[
-        "#3A7DFF",  # Azul forte
-        "#005C40",  # verde escuro 
-        "#EC4899",  # Rosa forte
-        "#D4A017"   # dourado
-    ]
+    range=["#3A7DFF", "#005C40", "#EC4899", "#D4A017"],
 )
 
-chart_scatter = (
-    jitter.mark_circle(size=150, opacity=0.75)
+chart_scatter_renda = (
+    jitter2.mark_circle(size=150, opacity=0.75)
     .encode(
         x=alt.X("Quantidade:Q", title="Quantidade"),
         y=alt.Y("Marca:N", title="Marca", sort="-x"),
-        color=alt.Color(
-            "Faixa de Renda:N",
-            scale=color_scale,
-            title="Faixa de Renda"
-        ),
+        color=alt.Color("Faixa de Renda:N", scale=color_scale, title="Faixa de Renda"),
         tooltip=[
             "Faixa de Renda",
             "Gênero",
             "Marca",
             "Quantidade",
-            "Preço Médio"
-        ]
+            "Preço Médio",
+        ],
     )
 )
 
-st.altair_chart(chart_scatter, use_container_width=True)
+# =============================
+# LAYOUT EM 2 COLUNAS
+# =============================
+col1, col2 = st.columns([2, 2])  # 50/50
+
+col1.write("Preferências por Gênero")
+col1.altair_chart(chart_scatter_genero, use_container_width=True)
+
+col2.write("Preferências por Faixa de Renda")
+col2.altair_chart(chart_scatter_renda, use_container_width=True)
