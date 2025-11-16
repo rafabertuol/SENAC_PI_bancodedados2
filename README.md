@@ -2,28 +2,31 @@
 
 **Base de dados:** [Car Sales Report - Kaggle](https://www.kaggle.com/datasets/missionjee/car-sales-report)
 
-Projeto acadêmico desenvolvido para a segunda entrega do Projeto Integrador. O objetivo é modelar, implementar e povoar um banco de dados relacional, demonstrando conceitos de normalização, integridade referencial e consultas avançadas.
+Projeto acadêmico desenvolvido para a segunda entrega do Projeto Integrador. O objetivo é modelar, implementar e alimentar um banco de dados relacional, demonstrando conceitos de normalização, integridade referencial e consultas avançadas.
 
 ## Funcionalidades
 
-- Criação de esquemas de banco de dados (tabelas, chaves primárias e estrangeiras)  
-- Scripts de inserção de dados (seeds)  
-- Consultas SQL demonstrativas (relatórios, junções, agregações)  
-- Procedimentos de armazenamento
-- Scripts de limpeza / reset do banco
+- Criação de esquemas de banco de dados (tabelas, chaves primárias e estrangeiras);  
+- Scripts de inserção de dados (seeds); 
+- Consultas SQL demonstrativas (relatórios, junções, agregações) ; 
+- Procedimentos de armazenados.
 
 ## Tecnologias
 
 - Banco de dados: MySQL
 - Linguagem para scripts: Python
-- Ferramentas: 
-- Linguagem backend ou aplicação que consome o banco: 
+- Ferramentas: MySQL Workbench
+- Linguagem backend ou aplicação cliente:
 
 ## Diagrama Entidade-Relacionamento (ER)
 
+
 ## Como executar
 
-1. Instale o banco de dados MySQL 8.0+
-2. Crie um novo banco com o nome `senac_pi_bd2`
-3. Execute o script de criação de tabelas:
-   ```bash
+1. Certifique-se de ter o Python 3.12.1 instalado
+2. Instale o Streamlit; `senac_pi_bd2`
+3. Execute a aplicação Streamlit usando o comando:
+   streamlit run homepage.py
+4.  Para configurar o banco de dados:
+   psql -U usuario -d senac_pi_bd2 -f scripts/create_tables.sql
+   psql -U usuario -d senac_pi_bd2 -f scripts/insert_data.sql
