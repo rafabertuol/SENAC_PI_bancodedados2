@@ -9,7 +9,7 @@ Projeto acadêmico desenvolvido para a segunda entrega do Projeto Integrador. O 
 - Criação de esquemas de banco de dados (tabelas, chaves primárias e estrangeiras)  
 - Scripts de inserção de dados (seeds)  
 - Consultas SQL demonstrativas (relatórios, junções, agregações)  
-- Procedimentos armazenados
+- Procedimentos de armazenamento
 - Scripts de limpeza / reset do banco
 
 ## Tecnologias
