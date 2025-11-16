@@ -16,14 +16,14 @@ Projeto acadêmico desenvolvido para a segunda entrega do Projeto Integrador. O 
 
 - Banco de dados: MySQL
 - Linguagem para scripts: Python
-- Ferramentas: (ex: pgAdmin, MySQL Workbench, linha de comando)  
-- Linguagem backend ou aplicação que consome o banco: **[por exemplo, Python / Java / PHP]**
+- Ferramentas: 
+- Linguagem backend ou aplicação que consome o banco: 
 
 ## Diagrama Entidade-Relacionamento (ER)
 
 ## Como executar
 
 1. Instale o banco de dados MySQL 8.0+
-2. Crie um novo banco com o nome `senac_pi_bd2` (ou outro, conforme seus scripts)  
+2. Crie um novo banco com o nome `senac_pi_bd2`
 3. Execute o script de criação de tabelas:
    ```bash
