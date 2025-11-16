@@ -1,0 +1,9 @@
+version: "3.1"
+
+services:
+  projeto_integrador_5:
+    build: .
+    container_name: projeto_integrador_5
+    command: streamlit run Homepage.py
+    ports:
+      - 8501:8501 # Streamlit app port
