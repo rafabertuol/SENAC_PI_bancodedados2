@@ -22,10 +22,11 @@
 9. Operações OLAP Implementadas
 10. DataFrames para Streamlit
 11. Como Executar
-12. Validação dos Dados
-13. Qualidade dos Dados
-14. Notas Técnicas
-15. Referências
+12. Dashboard
+13. Validação dos Dados
+14. Qualidade dos Dados
+15. Notas Técnicas
+16. Referências
 
 ---
 # 👥 **1. Integrantes** 
@@ -480,8 +481,11 @@ agora vá para http://localhost:8501
 Acesse `http://localhost:8501` para visualizar os dashboard
 
 ---
+# 📊 **12. Dashboard**
+Para visualizar o dashboard, clique [nesse link](https://projetointegrador5.streamlit.app/)
 
-# ✔️ **12. Validação dos Dados**
+---
+# ✔️ **13. Validação dos Dados**
 
 ### Estatísticas do Dataset
 
@@ -516,7 +520,7 @@ LIMIT 5;
 ```
 ---
 
-# ✔️ **13. Qualidade dos Dados**
+# ✔️ **14. Qualidade dos Dados**
 
 - ✅ Sem valores nulos em campos obrigatórios
 - ✅ Sem registros duplicados (car_id é único)
@@ -526,7 +530,7 @@ LIMIT 5;
 
 ---
 
-# 📝 **14. Notas Técnicas**
+# 📝 **15. Notas Técnicas**
 
 ### Decisões de Modelagem
 
@@ -556,7 +560,7 @@ O modelo foi projetado para ser facilmente extensível:
 
 ---
 
-# 📚 **15. Referências**
+# 📚 **16. Referências**
 
 - [MySQL Documentation](https://dev.mysql.com/doc/)
 - [Pandas Documentation](https://pandas.pydata.org/docs/)
