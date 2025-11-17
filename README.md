@@ -23,6 +23,9 @@
 10. [DataFrames para Streamlit](#dataframes-para-streamlit)
 11. [Como Executar](#como-executar)
 12. [Validação dos Dados](#validação-dos-dados)
+13. [Qualidade dos Dados](#qualidade-dos-dados)
+14. [Notas Técnicas](#notas-técnicas)
+15. [Referências](#referências)
 
 ---
 # 👥 **1. Integrantes**
@@ -536,8 +539,6 @@ O modelo foi projetado para ser facilmente extensível:
 - [Pandas Documentation](https://pandas.pydata.org/docs/)
 - [OLAP Operations](https://en.wikipedia.org/wiki/OLAP_cube)
 - [Star Schema Design](https://en.wikipedia.org/wiki/Star_schema)
-
----
 
 ---
 
