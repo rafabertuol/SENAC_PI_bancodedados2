@@ -8,14 +8,12 @@
 
 1. [Introdução](#introdução)
 2. [Objetivos](#objetivos)
-
    * 2.1 [Objetivo Geral](#objetivo-geral)
    * 2.2 [Objetivos Específicos](#objetivos-específicos)
 3. [Justificativa](#justificativa)
 4. [Metodologia](#metodologia)
 5. [Tecnologias Utilizadas](#tecnologias-utilizadas)
 6. [Estrutura do Banco de Dados](#estrutura-do-banco-de-dados)
-
    * 6.1 [Modelo Relacional](#modelo-relacional)
    * 6.2 [Modelo Dimensional (Star Schema)](#modelo-dimensional-star-schema)
    * 6.3 [Views Analíticas](#views-analíticas)
@@ -38,6 +36,7 @@ Utiliza uma base de vendas automotivas para:
 * Aplicar **consultas OLAP**
 * Gerar **DataFrames** para visualização no **Streamlit**
 
+**Base de dados:** [Car Sales Report - Kaggle](https://www.kaggle.com/datasets/missionjee/car-sales-report)
 A base contém **470 veículos** com informações de preço, quilometragem, motor, consumo, avaliação e status de venda.
 
 ---
@@ -60,8 +59,7 @@ Aplicar técnicas de Business Intelligence para estruturar, analisar e interpret
 
 # 📝 **3. Justificativa**
 
-O setor automotivo possui forte competitividade e volume de dados.
-A análise é essencial para:
+O setor automotivo possui forte competitividade e volume de dados. A análise é essencial para:
 
 * Compreender padrões de consumo
 * Avaliar desvalorização
@@ -77,7 +75,7 @@ Este projeto usa BI para transformar dados brutos em informação estratégica.
 A solução foi dividida em etapas:
 
 1. **Modelagem do banco relacional e dimensional**
-2. **Criação do banco e tabelas via SQL (DDL)**
+2.  **Criação da estrutura do banco de dados MySQL (DDL - Data Definition Language)** 
 3. **Carga e transformação dos dados (DML + Python)**
 4. **Implementação de operações OLAP**
 5. **Geração de DataFrames para Streamlit**
@@ -126,13 +124,13 @@ Armazena todas as vendas de carros.
 
 ### Índices Criados
 
-* `idx_sale_date`
-* `idx_dealer_region`
-* `idx_company`
-* `idx_model`
-* `idx_gender`
-* `idx_price`
-* `idx_annual_income`
+* `idx_sale_date` - Otimização de consultas temporais
+* `idx_dealer_region` - Análises regionais
+* `idx_company` - Análises por fabricante
+* `idx_model` - Análises por modelo
+* `idx_gender` - Análises demográficas
+* `idx_price` - Análises financeiras
+* `idx_annual_income` - Análises de perfil de cliente
 
 ---
 
@@ -140,32 +138,35 @@ Armazena todas as vendas de carros.
 
 ### Dimensões:
 
-* **`dim_time`** – informações temporais
-* **`dim_customer`** – dados do cliente
-* **`dim_dealer`** – concessionárias
-* **`dim_vehicle`** – detalhes do veículo
+* **`dim_time`** - Dimensão temporal
+   - `date_key`, `day`, `month`, `quarter`, `year`, `month_name`, `day_name`, `is_weekend`
+
+* **`dim_customer`** - Dimensão cliente
+   - `customer_key`, `customer_name`, `gender`, `income_bracket`, `annual_income`, `phone`
+
+* **`dim_dealer`** - Dimensão concessionária
+   - `dealer_key`, `dealer_name`, `dealer_no`, `dealer_region`
+
+* **`dim_vehicle`** - Dimensão veículo
+   - `vehicle_key`, `company`, `model`, `body_style`, `engine`, `transmission`, `color`
 
 ### Tabela Fato:
 
-**`fact_sales`**
-
-Campos principais:
-
-* chaves das dimensões
-* `price`
-* `annual_income`
-* `financial_effort_ratio`
+**`fact_sales`** - Fato de vendas
+- `sale_key`, `car_id`, `date_key`, `customer_key`, `dealer_key`, `vehicle_key`, `price`, `annual_income`, `financial_effort_ratio`
 
 ---
 
 ## 6.3 **Views Analíticas**
 
-1. `vw_sales_performance`
-2. `vw_sales_by_model`
-3. `vw_regional_analysis`
-4. `vw_customer_profile`
-5. `vw_income_preferences`
-6. `vw_dealer_ranking`
+Foram criadas 6 views para facilitar as análises OLAP:
+
+1. **`vw_sales_performance`** - Desempenho de vendas por período
+2. **`vw_sales_by_model`** - Vendas por modelo e marca
+3. **`vw_regional_analysis`** - Análise regional de vendas
+4. **`vw_customer_profile`** - Perfil dos clientes
+5. **`vw_income_preferences`** - Preferências por faixa de renda
+6. **`vw_dealer_ranking`** - Ranking de concessionárias
 
 ---
 
