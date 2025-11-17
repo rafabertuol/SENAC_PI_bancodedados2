@@ -28,7 +28,7 @@
 15. [Referências](#referências)
 
 ---
-# 👥 **1. Integrantes**  {#integrantes}
+# 👥 **1. Integrantes** 
 
 * Aguinaldo de Marcenes Vieira
 * Aline Freire Anholete Morais
