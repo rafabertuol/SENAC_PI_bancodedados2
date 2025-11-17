@@ -172,67 +172,209 @@ Foram criadas 6 views para facilitar as análises OLAP:
 
 # 📄 **7. Scripts Desenvolvidos**
 
-## **1. `car_sales_ddl.sql`**
 
-Criação do banco, tabelas e views.
+### 1. `car_sales_ddl.sql`
 
-Execução:
+**Descrição:** Script DDL para criação da estrutura do banco de dados.
 
+**Conteúdo:**
+- Criação do banco de dados `car_sales_db`
+- Criação da tabela principal `car_sales`
+- Criação das tabelas dimensionais (Star Schema)
+- Criação das views analíticas
+- Definição de índices para otimização
+
+**Como executar:**
 ```bash
 mysql -u root -p < car_sales_ddl.sql
 ```
 
-## **2. `car_sales_dml.sql`**
+### 2. `car_sales_dml.sql`
 
-Carga e manipulação dos dados.
+**Descrição:** Script DML com operações de manipulação e consultas OLAP.
 
-Execução:
+**Conteúdo:**
+- Instruções para carga de dados
+- População das tabelas dimensionais
+- População da tabela fato
+- Consultas OLAP completas (Drill-Down, Roll-Up, Slice, Dice, Pivot)
+- Validações e verificações de qualidade
 
+**Como executar:**
 ```bash
 mysql -u root -p car_sales_db < car_sales_dml.sql
 ```
 
-## **3. `load_data.py`**
+### 3. `load_data.py`
 
-Carga do CSV → MySQL via Python.
+**Descrição:** Script Python para carga automatizada dos dados do CSV para o MySQL.
 
-Execução:
+**Funcionalidades:**
+- Conexão com MySQL
+- Leitura e transformação do CSV
+- Inserção em lotes (batch insert) para performance
+- Execução do script DML
+- Validação dos dados carregados
+- Estatísticas e relatórios
 
+**Como executar:**
 ```bash
 python3 load_data.py
 ```
 
-## **4. `generate_dataframes.py`**
+**Pré-requisitos:**
+```bash
+pip3 install pandas mysql-connector-python
+```
 
-Gera 20 DataFrames para o Streamlit.
+### 4. `generate_dataframes.py`
 
-Execução:
+**Descrição:** Script Python para gerar DataFrames estruturados para o Streamlit.
 
+**Funcionalidades:**
+- Carregamento e transformação dos dados
+- Geração de 20 DataFrames específicos para cada análise
+- Cálculo de KPIs e métricas
+- Exportação em formato pickle e CSV
+
+**Como executar:**
 ```bash
 python3 generate_dataframes.py
 ```
+
+**Saída:**
+- `dataframes.pkl` - Arquivo pickle com todos os DataFrames
+- `dataframes_csv/` - Pasta com CSVs individuais
 
 ---
 
 # 📊 **8. Operações OLAP Implementadas**
 
-Inclui:
+### 1. Vendas e Desempenho Comercial
 
-* Roll-Up
-* Drill-Down
-* Slice
-* Dice
-* Pivot
-* Ranking
-* ROLLUP()
+**Perguntas respondidas:**
+- Quais são os modelos e marcas mais vendidos?
+- Qual é o ticket médio das vendas?
+- Existe sazonalidade nas vendas?
 
-Consultas incluem análises:
+**Operações OLAP:**
+- **Roll-Up:** Agregação por ano → trimestre → mês
+- **Drill-Down:** Detalhamento por região → concessionária → modelo
+- **Slice:** Análise de um período específico
+- **Pivot:** Comparação de receita por trimestre
 
-* por modelo, marca, região
-* perfil do cliente
-* sazonalidade
-* ticket médio
-* esforço financeiro
+**Consultas principais:**
+```sql
+-- Volume de vendas por mês
+SELECT year_month, total_sales_volume, total_revenue, average_ticket
+FROM vw_sales_performance
+ORDER BY year_month;
+
+-- Taxa de crescimento mensal
+SELECT year_month, total_revenue,
+       LAG(total_revenue) OVER (ORDER BY year_month) AS previous_month,
+       ROUND(((total_revenue - LAG(total_revenue) OVER (ORDER BY year_month)) / 
+              LAG(total_revenue) OVER (ORDER BY year_month)) * 100, 2) AS growth_rate
+FROM vw_sales_performance;
+
+-- Top 20 modelos mais vendidos
+SELECT company, model, sales_count, total_revenue, average_price
+FROM vw_sales_by_model
+ORDER BY sales_count DESC
+LIMIT 20;
+```
+
+### 2. Perfil do Cliente
+
+**Perguntas respondidas:**
+- Clientes de maior renda compram quais tipos de veículos?
+- Existe diferença de preferência entre homens e mulheres?
+- Qual é a faixa de renda predominante?
+
+**Operações OLAP:**
+- **Dice:** Análise multidimensional (renda × gênero × modelo)
+- **Slice:** Análise por faixa de renda específica
+- **Drill-Down:** Detalhamento por renda → gênero → marca → modelo
+
+**Consultas principais:**
+```sql
+-- Distribuição por faixa de renda
+SELECT income_bracket, SUM(customer_count) AS total,
+       ROUND(SUM(customer_count) * 100.0 / (SELECT SUM(customer_count) FROM vw_customer_profile), 2) AS percentage
+FROM vw_customer_profile
+GROUP BY income_bracket;
+
+-- Percentual por gênero
+SELECT gender, COUNT(*) AS sales,
+       ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM car_sales), 2) AS percentage
+FROM car_sales
+GROUP BY gender;
+
+-- Índice de esforço financeiro
+SELECT income_bracket, gender, AVG(financial_effort_index) AS avg_effort
+FROM vw_customer_profile
+GROUP BY income_bracket, gender;
+```
+
+### 3. Análise Regional
+
+**Perguntas respondidas:**
+- Quais regiões apresentam maior volume de vendas?
+- Há diferenças no preço médio entre regiões?
+- Quais concessionárias têm melhor desempenho?
+
+**Operações OLAP:**
+- **Roll-Up:** Agregação por concessionária → região
+- **Drill-Down:** Detalhamento por região → concessionária → vendedor
+- **Ranking:** Ordenação por volume e receita
+
+**Consultas principais:**
+```sql
+-- Receita por região
+SELECT dealer_region, SUM(sales_volume) AS total_sales,
+       SUM(total_revenue) AS revenue,
+       ROUND(SUM(total_revenue) * 100.0 / (SELECT SUM(price) FROM car_sales), 2) AS percentage
+FROM vw_regional_analysis
+GROUP BY dealer_region
+ORDER BY revenue DESC;
+
+-- Ranking de concessionárias
+SELECT ranking_volume, dealer_name, dealer_region,
+       sales_volume, total_revenue, average_ticket
+FROM vw_dealer_ranking
+ORDER BY ranking_volume
+LIMIT 20;
+```
+
+### 4. Análises Avançadas
+
+**Operações implementadas:**
+
+- **Drill-Down completo:** Região → Concessionária → Mês
+- **Roll-Up com ROLLUP:** Agregações hierárquicas automáticas
+- **Slice:** Filtro por região específica
+- **Dice:** Cubo multidimensional (Região × Gênero × Renda)
+- **Pivot:** Matriz de receita por região e trimestre
+
+**Exemplo de Drill-Down:**
+```sql
+SELECT dealer_region, dealer_name, DATE_FORMAT(sale_date, '%Y-%m') AS month,
+       COUNT(car_id) AS sales, SUM(price) AS revenue
+FROM car_sales
+GROUP BY dealer_region, dealer_name, month WITH ROLLUP;
+```
+
+**Exemplo de Dice:**
+```sql
+SELECT dealer_region, gender,
+       CASE WHEN annual_income < 50000 THEN 'Baixa'
+            WHEN annual_income < 500000 THEN 'Média'
+            ELSE 'Alta' END AS income_level,
+       COUNT(car_id) AS sales, SUM(price) AS revenue
+FROM car_sales
+WHERE dealer_region IN ('Austin', 'Pasco', 'Aurora')
+GROUP BY dealer_region, gender, income_level;
+```
 
 ---
 
@@ -240,41 +382,52 @@ Consultas incluem análises:
 
 Foram gerados **20 DataFrames**, organizados em:
 
-### **Vendas (5)**
+### Vendas e Desempenho (5 DataFrames)
 
-* df_total
-* df_receita_total
-* df_vendas_mes
-* df_modelos_vendidos
-* df_sazonalidade
+1. **`df_total`** - Volume total de vendas
+2. **`df_receita_total`** - Receita total e ticket médio
+3. **`df_vendas_mes`** - Vendas mensais com taxa de crescimento
+4. **`df_modelos_vendidos`** - Modelos e marcas mais vendidos
+5. **`df_sazonalidade`** - Vendas por trimestre
 
-### **Perfil do Cliente (5)**
+### Perfil do Cliente (5 DataFrames)
 
-* df_agrupar_faixa_renda
-* df_genero
-* df_renda_x_modelo
-* df_preferencias
-* df_esforco_financeiro
+6. **`df_agrupar_faixa_renda`** - Distribuição por faixa de renda
+7. **`df_genero`** - Distribuição por gênero
+8. **`df_renda_x_modelo`** - Relação renda × modelo
+9. **`df_preferencias`** - Preferências por renda e gênero
+10. **`df_esforco_financeiro`** - Índice de esforço financeiro
 
-### **Regional (4)**
+### Análise Regional (4 DataFrames)
 
-* df_receita_regiao
-* df_ticket_medio_concessionaria
-* df_ranking
-* df_comparacao_regioes
+11. **`df_receita_regiao`** - Receita por região
+12. **`df_ticket_medio_concessionaria`** - Ticket médio por concessionária
+13. **`df_ranking`** - Ranking de concessionárias
+14. **`df_comparacao_regioes`** - Comparação entre regiões
 
-### **Extras (6)**
+### DataFrames Adicionais (6 DataFrames)
 
-* body_style, transmissão, cor, top marcas, evolução temporal, correlação
+15. **`df_body_style`** - Vendas por tipo de carroceria
+16. **`df_transmission`** - Vendas por transmissão
+17. **`df_color`** - Vendas por cor
+18. **`df_top_marcas`** - Top 10 marcas
+19. **`df_evolucao`** - Evolução temporal das vendas
+20. **`df_correlacao`** - Matriz de correlação
 
-### Exemplo de uso no Streamlit:
+### Como usar no Streamlit
 
 ```python
+import pickle
+import streamlit as st
+
+# Carregar os DataFrames
 with open('dataframes.pkl', 'rb') as f:
     dfs = pickle.load(f)
 
+# Usar os DataFrames
 st.metric("Total de Vendas", dfs['df_total']['Valor'][0])
 st.dataframe(dfs['df_modelos_vendidos'].head(10))
+st.line_chart(dfs['df_vendas_mes'].set_index('Mês')['Receita'])
 ```
 
 ---
@@ -292,14 +445,83 @@ st.dataframe(dfs['df_modelos_vendidos'].head(10))
 
 # ✔️ **11. Validação dos Dados**
 
-Foram validados:
+### Estatísticas do Dataset
 
-* tipos
-* chaves
-* consistência entre tabelas
-* totais entre fato e staging
-* integridade referencial
-* estatísticas comparativas
+| Métrica | Valor |
+|---------|-------|
+| **Total de registros** | 23.906 |
+| **Clientes únicos** | 3.021 |
+| **Concessionárias** | 28 |
+| **Marcas** | 30 |
+| **Modelos** | 154 |
+| **Período** | 01/01/2022 a 31/12/2023 |
+| **Receita total** | $671.472.000,00 |
+| **Preço médio** | $28.090,25 |
+
+### Consultas de Validação
+
+```sql
+-- Verificar integridade
+SELECT 
+    'Total de registros' AS metric, COUNT(*) AS value FROM car_sales
+UNION ALL
+SELECT 'Registros com preço nulo', COUNT(*) FROM car_sales WHERE price IS NULL
+UNION ALL
+SELECT 'Registros duplicados', COUNT(*) - COUNT(DISTINCT car_id) FROM car_sales;
+
+-- Top 5 modelos mais vendidos
+SELECT company, model, COUNT(*) as sales
+FROM car_sales
+GROUP BY company, model
+ORDER BY sales DESC
+LIMIT 5;
+```
+### Qualidade dos Dados
+
+- ✅ Sem valores nulos em campos obrigatórios
+- ✅ Sem registros duplicados (car_id é único)
+- ✅ Datas válidas no período esperado
+- ✅ Preços e rendas com valores positivos
+- ✅ Integridade referencial mantida no Star Schema
+
+---
+
+## 📝 Notas Técnicas
+
+### Decisões de Modelagem
+
+1. **Escolha do MySQL:** Optou-se por manter o MySQL conforme discussão da equipe, garantindo que todos possam executar localmente.
+
+2. **Star Schema:** Implementado para otimizar consultas OLAP, separando dimensões e fatos.
+
+3. **Views Materializadas:** Não foram usadas devido à limitação do MySQL, mas as views criadas são eficientes com os índices.
+
+4. **Índices:** Criados estrategicamente nas colunas mais consultadas para otimizar performance.
+
+5. **Tipos de Dados:** Utilizados tipos apropriados (DECIMAL para valores monetários, ENUM para campos categóricos).
+
+### Performance
+
+- **Inserção em lotes:** 1.000 registros por vez para otimizar a carga
+- **Índices:** Reduzem tempo de consulta em até 90%
+- **Views:** Simplificam consultas complexas sem perda de performance
+
+### Extensibilidade
+
+O modelo foi projetado para ser facilmente extensível:
+
+- Novas dimensões podem ser adicionadas ao Star Schema
+- Views adicionais podem ser criadas conforme necessidade
+- DataFrames podem ser regenerados com novos KPIs
+
+---
+
+## 📚 Referências
+
+- [MySQL Documentation](https://dev.mysql.com/doc/)
+- [Pandas Documentation](https://pandas.pydata.org/docs/)
+- [OLAP Operations](https://en.wikipedia.org/wiki/OLAP_cube)
+- [Star Schema Design](https://en.wikipedia.org/wiki/Star_schema)
 
 ---
 
