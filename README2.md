@@ -6,27 +6,39 @@
 
 # 📚 **Sumário**
 
-1. [Introdução](#introdução)
-2. [Objetivos](#objetivos)
-   * 2.1 [Objetivo Geral](#objetivo-geral)
-   * 2.2 [Objetivos Específicos](#objetivos-específicos)
-3. [Justificativa](#justificativa)
-4. [Metodologia](#metodologia)
-5. [Tecnologias Utilizadas](#tecnologias-utilizadas)
-6. [Estrutura do Banco de Dados](#estrutura-do-banco-de-dados)
-   * 6.1 [Modelo Relacional](#modelo-relacional)
-   * 6.2 [Modelo Dimensional (Star Schema)](#modelo-dimensional-star-schema)
-   * 6.3 [Views Analíticas](#views-analíticas)
-7. [Scripts Desenvolvidos](#scripts-desenvolvidos)
-8. [Operações OLAP Implementadas](#operações-olap-implementadas)
-9. [DataFrames para Streamlit](#dataframes-para-streamlit)
-10. [Como Executar](#como-executar)
-11. [Validação dos Dados](#validação-dos-dados)
-12. [Integrantes](#integrantes)
+1. [Integrantes](#integrantes)
+2. [Introdução](#introdução)
+3. [Objetivos](#objetivos)
+   * 3.1 [Objetivo Geral](#objetivo-geral)
+   * 3.2 [Objetivos Específicos](#objetivos-específicos)
+4. [Justificativa](#justificativa)
+5. [Metodologia](#metodologia)
+6. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+7. [Estrutura do Banco de Dados](#estrutura-do-banco-de-dados)
+   * 7.1 [Modelo Relacional](#modelo-relacional)
+   * 7.2 [Modelo Dimensional (Star Schema)](#modelo-dimensional-star-schema)
+   * 7.3 [Views Analíticas](#views-analíticas)
+8. [Scripts Desenvolvidos](#scripts-desenvolvidos)
+9. [Operações OLAP Implementadas](#operações-olap-implementadas)
+10. [DataFrames para Streamlit](#dataframes-para-streamlit)
+11. [Como Executar](#como-executar)
+12. [Validação dos Dados](#validação-dos-dados)
+
+---
+# 👥 **1. Integrantes**
+
+* Aguinaldo de Marcenes Vieira
+* Aline Freire Anholete Morais
+* Ana Luisa Andrade Vasconcelos
+* Arcanjo Ricardo Souza da Silva
+* David Exposito de Carvalho
+* Edna Miranda Santana
+* Gabriela Carvalho Semensato
+* Rafaela Bertuol
 
 ---
 
-# 🧭 **1. Introdução**
+# 🧭 **2. Introdução**
 
 Este projeto integra conceitos de **banco de dados, análise de dados, ETL e BI**.
 Utiliza uma base de vendas automotivas para:
@@ -41,13 +53,13 @@ A base contém **470 veículos** com informações de preço, quilometragem, mot
 
 ---
 
-# 🎯 **2. Objetivos**
+# 🎯 **3. Objetivos**
 
-## 2.1 Objetivo Geral
+## 3.1 Objetivo Geral
 
 Aplicar técnicas de Business Intelligence para estruturar, analisar e interpretar dados automotivos, gerando insights úteis ao processo decisório.
 
-## 2.2 Objetivos Específicos
+## 3.2 Objetivos Específicos
 
 * Realizar limpeza e tratamento dos dados
 * Investigar atributos de performance e mercado
@@ -57,7 +69,7 @@ Aplicar técnicas de Business Intelligence para estruturar, analisar e interpret
 
 ---
 
-# 📝 **3. Justificativa**
+# 📝 **4. Justificativa**
 
 O setor automotivo possui forte competitividade e volume de dados. A análise é essencial para:
 
@@ -70,7 +82,7 @@ Este projeto usa BI para transformar dados brutos em informação estratégica.
 
 ---
 
-# 🔍 **4. Metodologia**
+# 🔍 **5. Metodologia**
 
 A solução foi dividida em etapas:
 
@@ -83,7 +95,7 @@ A solução foi dividida em etapas:
 
 ---
 
-# 🛠️ **5. Tecnologias Utilizadas**
+# 🛠️ **6. Tecnologias Utilizadas**
 
 | Tecnologia                 | Versão | Finalidade                |
 | -------------------------- | ------ | ------------------------- |
@@ -95,9 +107,9 @@ A solução foi dividida em etapas:
 
 ---
 
-# 🏗️ **6. Estrutura do Banco de Dados**
+# 🏗️ **7.Estrutura do Banco de Dados**
 
-## 6.1 **Modelo Relacional**
+## 7.1 **Modelo Relacional**
 
 ### Tabela Principal: `car_sales`
 
@@ -134,7 +146,7 @@ Armazena todas as vendas de carros.
 
 ---
 
-## 6.2 **Modelo Dimensional (Star Schema)**
+## 7.2 **Modelo Dimensional (Star Schema)**
 
 ### Dimensões:
 
@@ -157,7 +169,7 @@ Armazena todas as vendas de carros.
 
 ---
 
-## 6.3 **Views Analíticas**
+## 7.3 **Views Analíticas**
 
 Foram criadas 6 views para facilitar as análises OLAP:
 
@@ -170,7 +182,7 @@ Foram criadas 6 views para facilitar as análises OLAP:
 
 ---
 
-# 📄 **7. Scripts Desenvolvidos**
+# 📄 **8. Scripts Desenvolvidos**
 
 
 ### 1. `car_sales_ddl.sql`
@@ -248,7 +260,7 @@ python3 generate_dataframes.py
 
 ---
 
-# 📊 **8. Operações OLAP Implementadas**
+# 📊 **9. Operações OLAP Implementadas**
 
 ### 1. Vendas e Desempenho Comercial
 
@@ -378,7 +390,7 @@ GROUP BY dealer_region, gender, income_level;
 
 ---
 
-# 📦 **9. DataFrames para Streamlit**
+# 📦 **10. DataFrames para Streamlit**
 
 Foram gerados **20 DataFrames**, organizados em:
 
@@ -432,7 +444,7 @@ st.line_chart(dfs['df_vendas_mes'].set_index('Mês')['Receita'])
 
 ---
 
-# ▶️ **10. Como Executar**
+# ▶️ **11. Como Executar**
 
 1. Criar banco
 2. Executar DDL
@@ -443,7 +455,7 @@ st.line_chart(dfs['df_vendas_mes'].set_index('Mês')['Receita'])
 
 ---
 
-# ✔️ **11. Validação dos Dados**
+# ✔️ **12. Validação dos Dados**
 
 ### Estatísticas do Dataset
 
@@ -476,7 +488,9 @@ GROUP BY company, model
 ORDER BY sales DESC
 LIMIT 5;
 ```
-### Qualidade dos Dados
+---
+
+# ✔️ **13. Qualidade dos Dados**
 
 - ✅ Sem valores nulos em campos obrigatórios
 - ✅ Sem registros duplicados (car_id é único)
@@ -486,7 +500,7 @@ LIMIT 5;
 
 ---
 
-## 📝 Notas Técnicas
+# 📝 **14. Notas Técnicas**
 
 ### Decisões de Modelagem
 
@@ -516,7 +530,7 @@ O modelo foi projetado para ser facilmente extensível:
 
 ---
 
-## 📚 Referências
+# 📚 **15. Referências**
 
 - [MySQL Documentation](https://dev.mysql.com/doc/)
 - [Pandas Documentation](https://pandas.pydata.org/docs/)
@@ -525,17 +539,6 @@ O modelo foi projetado para ser facilmente extensível:
 
 ---
 
-# 👥 **12. Integrantes**
-
-* Aguinaldo de Marcenes Vieira
-* Aline Freire Anholete Morais
-* Ana Luisa Andrade Vasconcelos
-* Arcanjo Ricardo Souza da Silva
-* David Exposito de Carvalho
-* Edna Miranda Santana
-* Gabriela Carvalho Semensato
-* Rafaela Bertuol
-
 ---
 
-Última atualização: 17/11/2025
+**Última atualização: 17/11/2025**
