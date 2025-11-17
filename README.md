@@ -7,25 +7,25 @@
 # 📚 **Sumário**
 
 1. Integrantes
-2. [Introdução](#introdução)
-3. [Objetivos](#objetivos)
-   * 3.1 [Objetivo Geral](#objetivo-geral)
-   * 3.2 [Objetivos Específicos](#objetivos-específicos)
-4. [Justificativa](#justificativa)
-5. [Metodologia](#metodologia)
-6. [Tecnologias Utilizadas](#tecnologias-utilizadas)
-7. [Estrutura do Banco de Dados](#estrutura-do-banco-de-dados)
-   * 7.1 [Modelo Relacional](#modelo-relacional)
-   * 7.2 [Modelo Dimensional (Star Schema)](#modelo-dimensional-star-schema)
-   * 7.3 [Views Analíticas](#views-analíticas)
-8. [Scripts Desenvolvidos](#scripts-desenvolvidos)
-9. [Operações OLAP Implementadas](#operações-olap-implementadas)
-10. [DataFrames para Streamlit](#dataframes-para-streamlit)
-11. [Como Executar](#como-executar)
-12. [Validação dos Dados](#validação-dos-dados)
-13. [Qualidade dos Dados](#qualidade-dos-dados)
-14. [Notas Técnicas](#notas-técnicas)
-15. [Referências](#referências)
+2. Introdução
+3. Objetivos
+   * 3.1 Objetivo Geral
+   * 3.2 Objetivos Específicos
+4. Justificativa
+5. Metodologia
+6. Tecnologias Utilizadas
+7. Estrutura do Banco de Dados
+   * 7.1 Modelo Relacional
+   * 7.2 Modelo Dimensional (Star Schema)
+   * 7.3 Views Analíticas
+8. Scripts Desenvolvidos
+9. Operações OLAP Implementadas
+10. DataFrames para Streamlit
+11. Como Executar
+12. Validação dos Dados
+13. Qualidade dos Dados
+14. Notas Técnicas
+15. Referências
 
 ---
 # 👥 **1. Integrantes** 
