@@ -537,3 +537,5 @@ O modelo foi projetado para ser facilmente extensível:
 * Rafaela Bertuol
 
 ---
+
+Última atualização: 17/11/2025
