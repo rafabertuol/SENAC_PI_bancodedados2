@@ -6,7 +6,7 @@
 
 # 📚 **Sumário**
 
-1. [Integrantes](#integrantes)
+1. [Integrantes]
 2. [Introdução](#introdução)
 3. [Objetivos](#objetivos)
    * 3.1 [Objetivo Geral](#objetivo-geral)
